@@ -13,7 +13,6 @@ declare module "next-auth" {
       id: string;
       username: string;
       email: string;
-      role: string;
       image: string;
       token: string;
     };
@@ -64,7 +63,6 @@ export const authOptions: NextAuthOptions = {
               data: {
                 name: profile.name,
                 email: profile.email,
-                role: "user",
                 image: profile.image,
               },
             } );
@@ -75,7 +73,6 @@ export const authOptions: NextAuthOptions = {
               data: {
                 name: profile.name,
                 email: profile.email,
-                role: "user",
                 image: profile.image,
                 // googleAccountId: account.id, // Actualizar el ID de la cuenta de Google
               },
@@ -95,7 +92,6 @@ export const authOptions: NextAuthOptions = {
               data: {
                 name: profile.name,
                 email: profile.email,
-                role: "user",
                 image: profile.image || null,
               },
             } );
@@ -106,7 +102,6 @@ export const authOptions: NextAuthOptions = {
               data: {
                 name: profile.name,
                 email: profile.email,
-                role: "user",
                 image: profile.image,
               },
             } );

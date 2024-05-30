@@ -11,7 +11,6 @@ model User {
   id           String     @id @default(auto()) @map("_id") @db.ObjectId // ID único del usuario
   name         String // Nombre del usuario
   email        String     @unique // Dirección de correo electrónico (debe ser único)
-  role         String // Rol del usuario (por ejemplo, "admin", "user", etc.)
   image        String? // URL o ruta de la imagen de perfil (opcional)
   password     String? // Contraseña del usuario (se debe cifrar antes de almacenarla)
   registryDate DateTime   @default(now()) // Fecha de registro del usuario

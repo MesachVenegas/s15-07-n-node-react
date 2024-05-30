@@ -2,7 +2,6 @@ export interface Session {
   id: string;
   username: string;
   email: string;
-  role: string;
   image: string;
   token: string;
 }
@@ -17,7 +16,6 @@ export interface Register {
   email: string;
   password: string;
   confirmPassword: string;
-  role: string;
   image: string;
 }
 
@@ -34,7 +32,6 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: string;
   image?: string | null;
   password?: string | null;
   

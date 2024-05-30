@@ -13,7 +13,7 @@ model User {
   email        String     @unique // Dirección de correo electrónico (debe ser único)
   role         String // Rol del usuario (por ejemplo, "admin", "user", etc.)
   image        String? // URL o ruta de la imagen de perfil (opcional)
-  password     String // Contraseña del usuario (se debe cifrar antes de almacenarla)
+  password     String? // Contraseña del usuario (se debe cifrar antes de almacenarla)
   registryDate DateTime   @default(now()) // Fecha de registro del usuario
   custom       Settings[] // Datos personalizados (por ejemplo, moneda y notificaciones)
 }

@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId // ID único del usuario
+  name         String // Nombre del usuario
+  email        String     @unique // Dirección de correo electrónico (debe ser único)
+  role         String // Rol del usuario (por ejemplo, "admin", "user", etc.)
+  image        String? // URL o ruta de la imagen de perfil (opcional)
+  password     String // Contraseña del usuario (se debe cifrar antes de almacenarla)
+  registryDate DateTime   @default(now()) // Fecha de registro del usuario
+  custom       Settings[] // Datos personalizados (por ejemplo, moneda y notificaciones)
+}
+
+model Settings {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId // ID único de los datos personalizados
+  currency String // Moneda preferida del usuario
+  notify   Boolean // Indicador de notificaciones (verdadero o falso)
+  userId   String  @unique @map("user_id") @db.ObjectId // ID del usuario al que pertenecen estos datos personalizados
+  user     User    @relation(fields: [userId], references: [id])
+}
+
+model Report {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId // ID único del reporte
+  owner   String @map("owner_id") // ID del propietario del reporte (puede ser un ObjectId o cualquier otro identificador único)
+  period  Period // Período del reporte (seleccionado entre "week", "month" o "trimestral")
+  outcome Float // Gastos o pérdidas del período
+  income  Float // Ingresos del período
+  balance Float // Saldo neto del período (income - outcome)
+}
+
+enum Period {
+  WEEK
+  MONTH
+  TRIMESTRAL
+}
+
+model Transaction {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId // ID único de la transacción
+  owner       String   @map("owner_id") // ID del propietario de la transacción (puede ser un ObjectId o cualquier otro identificador único)
+  type        String // Tipo de transacción (por ejemplo, "ingreso", "gasto", etc.)
+  name        String // Nombre o descripción de la transacción
+  icon        String // Icono asociado a la transacción (puede ser una URL o un nombre de archivo)
+  payMethod   String // Método de pago utilizado (por ejemplo, "tarjeta de crédito", "efectivo", etc.)
+  amount      Float // Monto de la transacción (positivo para ingresos, negativo para gastos)
+  createdDate DateTime @default(now()) // Fecha de creación de la transacción
+  comment     String? // Comentario o nota adicional sobre la transacción (opcional)
+}

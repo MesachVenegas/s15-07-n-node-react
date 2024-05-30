@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #4ccc81;
+    --secondary: #5d87a8;
+    --layout: #f6f7fb;
+    --sky: #40aaff;
+    --purple: #8e35ff;
+    --red: #eb5757;
+    --text: #0c0c0c;
+  }
+
+  .dark {
+    --layout: #172635;
+    --text: #f6f7fb;
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--layout);
+    color: var(--text);
+  }
+}
+
+@layer components {
+  .title-1 {
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  .btn {
+    display: flex;
+    width: 100%;
+    max-width: 280px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+  }
+
+  .number-pad-item {
+    @apply grid place-content-center w-full h-12 border border-gray-300;
+  }
+
+  .welcome-gradient {
+    @apply flex flex-col items-center justify-end w-full p-10 rounded-t-full relative;
+    background: var(--primary);
+    background: linear-gradient(to bottom, #4ccc81, #e3f8e2);
+  }
+
+  .bg-gradient {
+    background: linear-gradient(360deg, var(--layout) 70%, #56da8a 100%);
+  }
+
+  .gradient-right-primary {
+    background: linear-gradient(260.54deg, #67e799 0%, #4ad07e 62.86%);
+  }
+
+  .badge-success {
+    background-image: radial-gradient(circle, #76e2a3 10%, #4ccc81 62.86%);
+  }
+
+  .badge-warning {
+    background-image: radial-gradient(circle, #ffd481 0%, #ffa800 94.53%);
+  }
+
+  .badge-error {
+    background-image: radial-gradient(circle, #e15050 0%, #f97474 100%);
+  }
+
+  .icon-badge {
+    border-radius: 30%;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+  }
+
+  .label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    background-color: transparent;
+    padding: 8px 4px;
+    border-radius: 6px;
+  }
+
+  .input-field {
+    display: flex;
+    background-color: transparent;
+    border-radius: 6px;
+    padding: 4px 0;
+    outline: none;
+  }
+
+  .card {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    height: 74px;
+    padding: 14px;
+    gap: 14px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+}

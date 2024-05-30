@@ -18,9 +18,7 @@ export const loginSchema = z.object({
 
 export const RegisterSchema = z
   .object({
-    username: z
-      .string()
-      .min(3, { message: "Debes ingresar un nombre de usuario" }),
+    name: z.string().min(3, { message: "Debes ingresar un nombre de usuario" }),
     email: z
       .string()
       .email({ message: "Ingresa una dirección de correo valido" }),

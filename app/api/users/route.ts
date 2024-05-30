@@ -16,9 +16,9 @@ const messages = {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, role, image, password } = body;
+    const { name, email, image, password } = body;
 
-    if (!name || !email || !role || !password) {
+    if (!name || !email || !password) {
       return NextResponse.json(
         { message: 'Todos los campos son obligatorios.' },
         { status: 400 }
@@ -31,7 +31,6 @@ export async function POST(req: Request) {
       data: {
         name,
         email,
-        role,
         image,
         password: hashedPassword
       },

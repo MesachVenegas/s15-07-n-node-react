@@ -39,7 +39,7 @@ export default function RegisterForm() {
         <FontAwesomeIcon icon={faCircleUser} className='w-8 h-8' />
         <label className="w-6 h-6 absolute bg-white/50 cursor-pointer rounded-md -bottom-1 -right-2">
           <Image src='/assets/add_a_photo.svg' fill alt="add avatar icon" />
-          <input type="file" className='hidden' />
+          <input type="file" className='hidden' title='add avatar' />
         </label>
       </Badge>
       <div>

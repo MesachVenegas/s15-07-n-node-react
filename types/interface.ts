@@ -6,12 +6,19 @@ export interface Session {
   token: string;
 }
 
-export interface Login {
+export interface LoginProps {
   email: string;
   password: string;
 }
 
-export interface Register {
+export interface UserProps {
+  name: string;
+  email: string;
+  image?: string | null;
+  password?: string | null;
+}
+
+export interface RegisterProps {
   username: string;
   email: string;
   password: string;
@@ -19,33 +26,22 @@ export interface Register {
   image: string;
 }
 
-export interface ChangePassword {
+export interface ChangePasswordProps {
   newPassword: string;
   confirmPassword: string;
 }
 
-export interface ForgotPassword {
+export interface ForgotPasswordProps {
   email: string;
 }
 
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  image?: string | null;
-  password?: string | null;
-  
-}
-
-export interface Setting {
-  id: string;
+export interface SettingProps {
   currency: string;
-  notify: string;
+  notify: boolean;
   userId: string;
 }
 
-export interface Report {
-  id: string;
+export interface ReportProps {
   owner:string;
   period: string;
   outcome: number;
@@ -53,8 +49,7 @@ export interface Report {
   balance: number;
 }
 
-export interface Transaction {
-  id: string;
+export interface TransactionProps {
   owner: string;
   type: string;
   name: string;

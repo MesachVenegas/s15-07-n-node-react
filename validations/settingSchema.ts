@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const settingSchema = z.object({
+export const registerSettingSchema = z.object({
   currency: z.string().min(6, {
     message: "Por favor ingrese su moneda preferida"
   }),
@@ -9,3 +9,5 @@ export const settingSchema = z.object({
     message: "Por favor, selecciona usuario.",
   }),
 })
+
+export type RegisterSetting = z.infer<typeof registerSettingSchema>;

@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId // ID único del usuario
-  name         String // Nombre del usuario
+  username     String // Nombre del usuario
   email        String    @unique // Dirección de correo electrónico (debe ser único)
   image        String? // URL o ruta de la imagen de perfil (opcional)
   password     String? // Contraseña del usuario (se debe cifrar antes de almacenarla)

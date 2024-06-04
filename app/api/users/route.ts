@@ -16,9 +16,9 @@ const messages = {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, image, password } = body;
+    const { username, email, image, password } = body;
 
-    if (!name || !email || !password) {
+    if (!username || !email || !password) {
       return NextResponse.json(
         { message: 'Todos los campos son obligatorios.' },
         { status: 400 }
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
     const newUser = await prisma.user.create({
       data: {
-        name,
+        username,
         email,
         image,
         password: hashedPassword

@@ -1,34 +1,44 @@
-'use client'
+"use client";
 
-import { useTransition, useState } from 'react';
-import Image from 'next/image';
+import { useTransition, useState } from "react";
+import Image from "next/image";
 
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faEye, faEyeSlash, faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faEye,
+  faEyeSlash,
+  faCircleUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
 import Badge from "@/components/ui/badge-icon";
-import { RegisterSchema } from '@/validations/auth';
-
+import { RegisterSchema } from "@/validations/auth";
 
 export default function RegisterForm() {
   const [isLoading, startTransition] = useTransition();
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof RegisterSchema>>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
-  })
+  });
 
-  const registerAction: SubmitHandler<z.infer<typeof RegisterSchema>> = (data) => {
+  const registerAction: SubmitHandler<z.infer<typeof RegisterSchema>> = (
+    data
+  ) => {
     startTransition(() => {
       console.log(data);
-    })
-  }
+    });
+  };
 
   return (
     <form
@@ -36,10 +46,10 @@ export default function RegisterForm() {
       className="flex flex-col justify-center items-center gap-6 w-full max-w-md"
     >
       <Badge variant="primary" size="lg" className="mb-6 relative">
-        <FontAwesomeIcon icon={faCircleUser} className='w-8 h-8' />
+        <FontAwesomeIcon icon={faCircleUser} className="w-8 h-8" />
         <label className="w-6 h-6 absolute bg-white/50 cursor-pointer rounded-md -bottom-1 -right-2">
-          <Image src='/assets/add_a_photo.svg' fill alt="add avatar icon" />
-          <input type="file" className='hidden' />
+          <Image src="/assets/add_a_photo.svg" fill alt="add avatar icon" />
+          <input type="file" className="hidden" aria-label="Add avatar" />
         </label>
       </Badge>
       <div>

@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
 import { LoginSchema } from '@/validations/auth';
+import Authenticate from "@/services/authentication";
 
 export default function LoginForm() {
 	const [isLoading, startTransition] = useTransition();
@@ -28,7 +29,8 @@ export default function LoginForm() {
 
 	const handleLogin: SubmitHandler<z.infer<typeof LoginSchema>> = (data) => {
 		startTransition(() => {
-			console.log(data);
+			Authenticate(data)
+				.catch(err => console.error(err.message));
 		});
 	};
 

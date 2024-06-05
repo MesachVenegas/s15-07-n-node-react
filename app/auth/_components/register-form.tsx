@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import Input from "@/components/ui/input";
+import { registerUser } from '@/services';
 import Button from "@/components/ui/button";
 import Badge from "@/components/ui/badge-icon";
 import { RegisterSchema } from "@/validations/auth";
@@ -36,7 +37,9 @@ export default function RegisterForm() {
 		data
 	) => {
 		startTransition(() => {
-			console.log(data);
+			registerUser(data)
+				.then(res => console.log(res))
+				.catch(err => console.error(err.message));
 		});
 	};
 

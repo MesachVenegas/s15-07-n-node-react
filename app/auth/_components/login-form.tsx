@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
+import { LoginSchema } from '@/validations/auth';
 
 export default function LoginForm() {
 	const [isLoading, startTransition] = useTransition();
@@ -17,21 +18,27 @@ export default function LoginForm() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
+	} = useForm({
+		resolver: zodResolver(LoginSchema),
+		defaultValues: {
+			email: "",
+			password: "",
+		}
+	});
 
-	const handleLogin = () => {
+	const handleLogin: SubmitHandler<z.infer<typeof LoginSchema>> = (data) => {
 		startTransition(() => {
-			console.log("Login");
+			console.log(data);
 		});
 	};
 
 	return (
-		<form className="flex flex-col justify-center items-center gap-6">
+		<form className="flex flex-col justify-center items-center gap-6" onSubmit={handleSubmit(handleLogin)}>
 			<div>
-				<Input label="Email" placeholder="Ingresa tu email" />
+				<Input label="Email" placeholder="Ingresa tu email" {...register("email")} />
 			</div>
 			<div>
-				<Input label="Contraseña" placeholder="************" />
+				<Input label="Contraseña" placeholder="************" {...register("password")} />
 			</div>
 
 			<Button

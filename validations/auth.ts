@@ -8,14 +8,6 @@ export const LoginSchema = z.object({
     .email({ message: "Ingresa una dirección de correo valido" }),
   password: z
     .string()
-    .min(6, { message: "La contraseña debe contener al menos 6 caracteres" })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-      {
-        message:
-          "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial(@$!%*?&)",
-      }
-    ),
 });
 
 export type LoginUser = z.infer<typeof LoginSchema>;

@@ -4,9 +4,10 @@ import type { Metadata } from 'next';
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { signIn } from '@/auth';
 import Button from "@/components/ui/button";
-import Badge from "@/components/ui/badge-icon";
 import CustomLink from "@/components/ui/link";
+import Badge from "@/components/ui/badge-icon";
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 export const metadata: Metadata = {
@@ -24,23 +25,38 @@ export default function LoginPage() {
 			<div className="flex flex-col justify-center items-center gap-6 p-10 w-full h-full">
 				{/* Proveedores de autentificación de terceros*/}
 				<div className="flex flex-col gap-6">
-					<Button className="shadow-none" variant="outline" size="lg">
-						<Image
-							src="/assets/google.svg"
-							width={18}
-							height={18}
-							alt="Google Icon"
-						/>
-						Sign in with Google
-					</Button>
-					<Button className="shadow-none" variant="black" size="lg">
-						<FontAwesomeIcon icon={faGithub} className="w-5 h-5" />
-						Sign in with Github
-					</Button>
-					<Button className="shadow-none" variant="info" size="lg">
-						<FontAwesomeIcon icon={faLinkedin} className="w-5 h-5" />
-						Login with LinkedIn
-					</Button>
+					<form action={async () => {
+						'use server';
+						await signIn('google');
+					}}>
+						<Button className="shadow-none" variant="outline" size="lg">
+							<Image
+								src="/assets/google.svg"
+								width={18}
+								height={18}
+								alt="Google Icon"
+							/>
+							Sign in with Google
+						</Button>
+					</form>
+					<form action={async () => {
+						'use server';
+						await signIn('github');
+					}}>
+						<Button className="shadow-none" variant="black" size="lg">
+							<FontAwesomeIcon icon={faGithub} className="w-5 h-5" />
+							Sign in with Github
+						</Button>
+					</form>
+					<form action={async () => {
+						'use server';
+						await signIn('linkedin');
+					}}>
+						<Button className="shadow-none" variant="info" size="lg">
+							<FontAwesomeIcon icon={faLinkedin} className="w-5 h-5" />
+							Login with LinkedIn
+						</Button>
+					</form>
 				</div>
 				{/* Separador */}
 				<div className="flex w-full max-w-sm items-center justify-center gap-6">

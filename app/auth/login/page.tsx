@@ -1,13 +1,14 @@
 import Image from "next/image";
 
+import { signIn } from '@/auth';
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Button from "@/components/ui/button";
-import Badge from "@/components/ui/badge-icon";
-import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import CustomLink from "@/components/ui/link";
-import LoginForm from "../_components/login-form";
+import Badge from "@/components/ui/badge-icon";
+import LoginForm from "@/app/auth/_components/login-form";
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
 export default function LoginPage() {
 	return (
@@ -27,20 +28,39 @@ export default function LoginPage() {
 				</div>
 				{/* Proveedores de autentificación de terceros*/}
 				<div className="flex justify-center w-full gap-6">
-					<Button variant="outline" size="icon" className="rounded-md">
-						<Image
-							src="/assets/google.svg"
-							width={22}
-							height={22}
-							alt="Google Icon"
-						/>
-					</Button>
-					<Button variant="black" size="icon" className="rounded-md">
-						<FontAwesomeIcon icon={faGithub} className="w-full h-full" />
-					</Button>
-					<Button variant="info" size="icon" className="rounded-md">
-						<FontAwesomeIcon icon={faLinkedin} className="w-full h-full" />
-					</Button>
+					{/* Autenticación de google */}
+					<form action={ async () => {
+						'use server';
+						await signIn('google');
+
+					}}>
+						<Button variant="outline" size="icon" className="rounded-md" type="submit">
+							<Image
+								src="/assets/google.svg"
+								width={22}
+								height={22}
+								alt="Google Icon"
+							/>
+						</Button>
+					</form>
+					{/* Autenticación de Github */}
+					<form action={ async () => {
+						'use server';
+						await signIn('github');
+					}}>
+						<Button variant="black" size="icon" className="rounded-md" type="submit">
+							<FontAwesomeIcon icon={faGithub} className="w-full h-full" />
+						</Button>
+					</form>
+					{/* Autenticación de LinkedIn */}
+					<form action={ async () => {
+						'use server';
+						await signIn('linkedin');
+					}}>
+						<Button variant="info" size="icon" className="rounded-md" type="submit">
+							<FontAwesomeIcon icon={faLinkedin} className="w-full h-full" />
+						</Button>
+					</form>
 				</div>
 				<p className="flex gap-2 text-sm">
 					¿Olvidaste tu contraseña?

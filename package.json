@@ -21,8 +21,6 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-email/components": "^0.0.19",
-    "@types/bcryptjs": "^2.4.6",
-    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -44,7 +42,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.12",
     "@types/react": "18.3.2",

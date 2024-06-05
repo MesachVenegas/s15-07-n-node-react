@@ -7,9 +7,6 @@ import Linkedin from 'next-auth/providers/linkedin';
 import Credentials from 'next-auth/providers/credentials';
 import { getUserByEmail } from "./services";
 
-const getUser = async () => {
-  return null
-}
 
 export default {
   providers: [

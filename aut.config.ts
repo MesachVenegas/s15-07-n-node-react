@@ -3,6 +3,7 @@ import type { NextAuthConfig } from "next-auth";
 import bcrypt from 'bcryptjs';
 
 import Google from 'next-auth/providers/google';
+import Github from 'next-auth/providers/github';
 import Linkedin from 'next-auth/providers/linkedin';
 import Credentials from 'next-auth/providers/credentials';
 import { getUserByEmail } from "./services";
@@ -13,6 +14,10 @@ export default {
     Google({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
+    }),
+    Github({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
     }),
     Linkedin({
       clientId: process.env.LINKEDIN_CLIENT_ID,

@@ -44,6 +44,9 @@ const config = {
       },
       boxShadow: {
         badge: "0 5px 10px rgba(0, 0, 0, 0.4)"
+      },
+      backgroundImage: {
+        'logo': 'url("/assets/transparent-logo.svg"), linear-gradient(360deg, #f6f7fb 70%, #56da8a 100%)'
       }
     },
   },

@@ -1,18 +1,17 @@
 'use client'
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
-import { faArrowRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 import Button from '@/components/ui/button';
-import useQueryParams from '@/hooks/useQueryParams';
 
 export default function EntriesForm() {
-  const queryParams = useQueryParams();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [value, setValue] = useState<number | string>(0);
 
   function handlePadClick(value: string) {
@@ -34,20 +33,20 @@ export default function EntriesForm() {
     }
   }
 
-  function handleForm(value: number | string) {
-    console.log(pathname)
-    console.log(value)
+  function handleForm(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     console.log(value)
   }
 
   return (
     <div className="flex flex-col justify-center items-center gap-10 w-full py-10">
-      <form className="flex flex-col justify-center items-center gap-6 w-full">
+      <form className="flex flex-col justify-center items-center gap-6 w-full" onSubmit={handleForm}>
         <div className="flex justify-center items-end max-w-fit mx-auto">
           $
           <input
             type='text'
             inputMode='numeric'
+            title='income'
             value={value}
             className="w-[160px] bg-transparent focus-visible:outline-none focus-visible:ring-0 px-1 text-4xl"
             onChange={handleChange}

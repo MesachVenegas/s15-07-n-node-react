@@ -15,10 +15,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import Input from "@/components/ui/input";
-import { registerUser } from '@/services';
 import Button from "@/components/ui/button";
 import Badge from "@/components/ui/badge-icon";
 import { RegisterSchema } from "@/validations/auth";
+import { registerNewuser } from "@/services/authentication";
 
 export default function RegisterForm() {
 	const [isLoading, startTransition] = useTransition();
@@ -33,11 +33,9 @@ export default function RegisterForm() {
 		resolver: zodResolver(RegisterSchema),
 	});
 
-	const registerAction: SubmitHandler<z.infer<typeof RegisterSchema>> = (
-		data
-	) => {
+	const registerAction: SubmitHandler<z.infer<typeof RegisterSchema>> = (data) => {
 		startTransition(() => {
-			registerUser(data)
+			registerNewuser(data)
 				.then(res => console.log(res))
 				.catch(err => console.error(err.message));
 		});
@@ -59,7 +57,7 @@ export default function RegisterForm() {
 					/>
 				</label>
 			</Badge>
-			<div>
+			<div className="w-full max-w-xs">
 				<Input
 					type="text"
 					label="Usuario"
@@ -72,7 +70,7 @@ export default function RegisterForm() {
 					{errors.username && <span>{errors.username.message}</span>}
 				</div>
 			</div>
-			<div>
+			<div className="w-full max-w-xs">
 				<Input
 					type="email"
 					label="Email"
@@ -85,7 +83,7 @@ export default function RegisterForm() {
 					{errors.email && <span>{errors.email.message}</span>}
 				</div>
 			</div>
-			<div>
+			<div className="w-full max-w-xs">
 				<Input
 					type={showPass ? "text" : "password"}
 					label="Contraseña"
@@ -103,7 +101,7 @@ export default function RegisterForm() {
 					{errors.password && <span>{errors.password.message}</span>}
 				</div>
 			</div>
-			<div>
+			<div className="w-full max-w-xs">
 				<Input
 					type={showConfirm ? "text" : "password"}
 					label="Confirmar contraseña"
@@ -126,7 +124,7 @@ export default function RegisterForm() {
 				type="submit"
 				disabled={isLoading}
 				size="wide"
-				className="justify-between text-white gradient-right-primary">
+				className="justify-between text-white gradient-right-primary max-w-xs">
 				Continuar
 				<FontAwesomeIcon icon={faArrowRight} className="w-5 h-5" />
 			</Button>

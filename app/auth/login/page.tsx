@@ -20,25 +20,25 @@ export default function LoginPage() {
 				{/* Formulario de login */}
 				<LoginForm />
 				{/* Separador */}
-				<div className="flex w-full max-w-[200px] items-center justify-center gap-6 font-semibold">
+				<div className="flex w-full max-w-xs items-center justify-center gap-6 font-semibold">
 					<hr className="w-full bg-slate-400 h-[2px]" />
 					o
 					<hr className="w-full bg-slate-400 h-[2px]" />
 				</div>
 				{/* Proveedores de autentificación de terceros*/}
-				<div className="flex gap-6">
-					<Button variant="outline" size="icon">
+				<div className="flex justify-center w-full gap-6">
+					<Button variant="outline" size="icon" className="rounded-md">
 						<Image
 							src="/assets/google.svg"
-							width={18}
-							height={18}
+							width={22}
+							height={22}
 							alt="Google Icon"
 						/>
 					</Button>
-					<Button variant="black" size="icon">
+					<Button variant="black" size="icon" className="rounded-md">
 						<FontAwesomeIcon icon={faGithub} className="w-full h-full" />
 					</Button>
-					<Button variant="info" size="icon">
+					<Button variant="info" size="icon" className="rounded-md">
 						<FontAwesomeIcon icon={faLinkedin} className="w-full h-full" />
 					</Button>
 				</div>

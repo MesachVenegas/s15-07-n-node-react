@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { poppins } from "@/styles/fonts";
+
 import "@/styles/globals.css";
+import { poppins } from "@/styles/fonts";
+import AuthProvider from "@/components/auth-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -24,7 +26,9 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${poppins.className} antialiased text-slate-700 dark:text-layout`}>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

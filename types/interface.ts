@@ -12,10 +12,12 @@ export interface LoginProps {
 }
 
 export interface UserProps {
-  name: string;
+  id?: string;
+  username: string;
   email: string;
   image?: string | null;
   password?: string | null;
+  registryDate?: Date;
 }
 
 export interface RegisterProps {

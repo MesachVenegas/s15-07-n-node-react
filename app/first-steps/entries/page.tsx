@@ -1,16 +1,13 @@
-'use client';
+"use client"
 
 import Image from 'next/image';
 
-import { useSearchParams } from 'next/navigation';
 
 import Badge from "@/components/ui/badge-icon";
 import EntriesForm from '@/app/first-steps/_components/entries-form';
 
-export default function Entries() {
-  const urlParams = useSearchParams();
-  const param = urlParams.get('plan');
-
+export default function Entries({ searchParams }: { searchParams: { plan: string } }) {
+  const plan = searchParams?.plan;
 
   return (
     <main className="flex flex-col justify-center items-center w-full min-h-screen gap-10 p-10 bg-gradient">
@@ -18,7 +15,7 @@ export default function Entries() {
       <Badge variant='success' size='lg' >
         <Image src='/assets/box_download.svg' width={32} height={32} alt="bos download icon" />
       </Badge>
-      <h2 className='capitalize text-lg font-semibold'>{param?.toString()}</h2>
+      <h2 className='capitalize text-lg font-semibold'>{plan?.toString()}</h2>
       <EntriesForm />
     </main>
   )

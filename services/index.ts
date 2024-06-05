@@ -1,11 +1,14 @@
+'use server'
+
+import { z } from "zod";
 import prisma from "@/lib/prisma"; // Asegúrate de que este camino sea correcto
 import {
-  LoginUser,
   RegisterUser,
   ChangePasswordUser,
   ForgetPasswordUser,
   ChangePasswordSchema,
 } from "@/validations/auth";
+import { RegisterSchema } from "@/validations/auth";
 import {
   RegisterSetting,
   registerSettingSchema,
@@ -17,7 +20,8 @@ import { render } from "@react-email/components";
 import Email from "@/emails";
 import { LoginProps, SettingProps, UserProps } from '@/types/interface';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// TODO: fix resend instance to work;
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * Registers a new user in the database if the email is not already taken.
@@ -38,17 +42,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
  */
 
 export async function registerUser(
-  data: RegisterUser
+  data: z.infer<typeof RegisterSchema>
 ): Promise<{ message: string; data: UserProps | null }> {
   try {
-    const existingUser = await prisma.user.findUnique({
-      where: { email: data.email },
-    });
-
-    if (existingUser) {
-      return { message: "User already exists", data: null };
-    }
-
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     const newUser = await prisma.user.create({
@@ -69,7 +65,7 @@ export async function registerUser(
       },
     };
   } catch (error) {
-    throw new Error("Registration failed");
+    throw error;
   }
 }
 
@@ -90,7 +86,7 @@ export async function registerUser(
  */
 
 export async function getUserByEmail(
-  email : string
+  email: string
 ): Promise<{ message: string; data: UserProps | null }> {
   try {
     const user = await prisma.user.findUnique({ where: { email: email } });
@@ -189,12 +185,13 @@ export async function forgetPassword(
     const resetPasswordLink = `${process.env.NEXTAUTH_URL}/token=${token}`;
     const userFirstname = user.username;
 
-    await resend.emails.send({
-      from: "Course Programming<onboarding@resend.dev>",
-      to: email,
-      subject: "Change password",
-      html: render(Email({ userFirstname, resetPasswordLink })),
-    });
+    // TODO: Fix resend instance to send emails.
+    // await resend.emails.send({
+    //   from: "Course Programming<onboarding@resend.dev>",
+    //   to: email,
+    //   subject: "Change password",
+    //   html: render(Email({ userFirstname, resetPasswordLink })),
+    // });
 
     return { message: "Password reset instructions sent to your email" };
   } catch (error) {

@@ -8,6 +8,7 @@ export const LoginSchema = z.object({
     .email({ message: "Ingresa una dirección de correo valido" }),
   password: z
     .string()
+    .min(1, { message: "Ingresa una contraseña" })
 });
 
 export type LoginUser = z.infer<typeof LoginSchema>;

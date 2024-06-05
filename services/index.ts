@@ -10,7 +10,7 @@ import {
   RegisterSetting,
   registerSettingSchema,
 } from "@/validations/settingSchema"; // Ajusta el camino según sea necesario
-import bcrypt from "bcrypt"; // Ensure you have bcryptjs installed
+import bcrypt from "bcryptjs"; // Ensure you have bcryptjs installed
 import jwt from "jsonwebtoken";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
@@ -63,7 +63,7 @@ export async function registerUser(
     return {
       message: "User registered successfully",
       data: {
-        name: newUser.username,
+        username: newUser.username,
         email: newUser.email,
         image: newUser.image,
       },
@@ -89,29 +89,13 @@ export async function registerUser(
  * @returns {Promise<{message: string; data: LoginProps | null}>} Returns a message and the user data if authentication is successful.
  */
 
-export async function loginUser(
-  data: LoginUser
-): Promise<{ message: string; data: LoginProps | null }> {
+export async function getUserByEmail(
+  email : string
+): Promise<{ message: string; data: UserProps | null }> {
   try {
-    const user = await prisma.user.findUnique({ where: { email: data.email } });
+    const user = await prisma.user.findUnique({ where: { email: email } });
 
-    if (!user || !user.password) {
-      return { message: "User not found", data: null };
-    }
-
-    const isPasswordValid = await bcrypt.compare(data.password, user.password);
-
-    if (!isPasswordValid) {
-      return { message: "Invalid password", data: null };
-    }
-
-    return {
-      message: "Login successful",
-      data: {
-        email: user.email,
-        password: user.password,
-      },
-    };
+    return { message: "success", data: user };
   } catch (error) {
     console.error(error);
     throw new Error("Login failed");
@@ -222,7 +206,7 @@ export async function forgetPassword(
 /**
  * Registers a new setting in the database.
  *
- * This function validates the setting data using a schema, ensures the user ID is valid, 
+ * This function validates the setting data using a schema, ensures the user ID is valid,
  * and creates a new setting record in the database.
  *
  * @example

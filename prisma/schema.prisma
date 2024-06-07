@@ -18,6 +18,8 @@ model User {
   custom       Setting[] // Datos personalizados (por ejemplo, moneda y notificaciones)
   accounts     Account[]
   sessions     Session[]
+  revenues     Revenue[]
+  bills        Bill[]
 }
 
 model Account {
@@ -67,6 +69,7 @@ model Setting {
   currency String // Moneda preferida del usuario
   notify   Boolean // Indicador de notificaciones (verdadero o falso)
   userId   String  @unique @map("user_id") @db.ObjectId // ID del usuario al que pertenecen estos datos personalizados
+
   user     User    @relation(fields: [userId], references: [id])
 }
 
@@ -89,3 +92,44 @@ model Transaction {
   createdDate DateTime @default(now()) // Fecha de creación de la transacción
   comment     String? // Comentario o nota adicional sobre la transacción (opcional)
 }
+
+// Modelo para el registro de ingresos
+model Revenue {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  amount      Float
+  createdDate DateTime  @default(now())
+  owner       String    @db.ObjectId @map("owner_id")
+
+  user        User      @relation(fields: [owner], references: [id])
+
+  category    Category[]
+}
+
+
+//  Modelo para el registro de los gastos
+model Bill {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  amount      Float
+  createdDate DateTime  @default(now())
+  owner       String    @db.ObjectId @map("owner_id")
+
+  user        User      @relation(fields: [owner], references: [id])
+
+  category    Category[]
+}
+
+// Modelo para las categorías para los tipos de gastos e ingresos
+model Category {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  owner       String    @db.ObjectId @map("owner_id")
+  createdDate DateTime  @default(now())
+  billId      String    @db.ObjectId @map("bill_id")
+  revenueId   String    @db.ObjectId @map("revenue_id")
+
+  bill        Bill      @relation(fields: [billId], references: [id])
+  revenue     Revenue   @relation(fields: [revenueId], references: [id])
+}
+

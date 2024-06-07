@@ -187,7 +187,7 @@ export async function forgetPassword(
 
     // TODO: Fix resend instance to send emails.
     // await resend.emails.send({
-    //   from: "Course Programming<onboarding@resend.dev>",
+    //   from: "onboarding@resend.dev",
     //   to: email,
     //   subject: "Change password",
     //   html: render(Email({ userFirstname, resetPasswordLink })),

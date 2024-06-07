@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId // ID único del usuario
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId // ID único del usuario
   username     String // Nombre del usuario
-  email        String    @unique // Dirección de correo electrónico (debe ser único)
+  email        String   @unique // Dirección de correo electrónico (debe ser único)
   image        String? // URL o ruta de la imagen de perfil (opcional)
   password     String? // Contraseña del usuario (se debe cifrar antes de almacenarla)
-  registryDate DateTime  @default(now()) // Fecha de registro del usuario
+  registryDate DateTime @default(now()) // Fecha de registro del usuario
 
-  custom       Setting[] // Datos personalizados (por ejemplo, moneda y notificaciones)
-  accounts     Account[]
-  sessions     Session[]
-  revenues     Revenue[]
-  bills        Bill[]
+  custom   Setting[] // Datos personalizados (por ejemplo, moneda y notificaciones)
+  accounts Account[]
+  sessions Session[]
+  revenues Revenue[]
+  bills    Bill[]
+  goal     Goal[]
 }
 
 model Account {
@@ -70,7 +71,7 @@ model Setting {
   notify   Boolean // Indicador de notificaciones (verdadero o falso)
   userId   String  @unique @map("user_id") @db.ObjectId // ID del usuario al que pertenecen estos datos personalizados
 
-  user     User    @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Report {
@@ -95,41 +96,54 @@ model Transaction {
 
 // Modelo para el registro de ingresos
 model Revenue {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   amount      Float
-  createdDate DateTime  @default(now())
-  owner       String    @db.ObjectId @map("owner_id")
+  createdDate DateTime @default(now())
+  owner       String   @map("owner_id") @db.ObjectId
 
-  user        User      @relation(fields: [owner], references: [id])
+  user User @relation(fields: [owner], references: [id])
 
-  category    Category[]
+  category Category[]
+  goal     Goal[]
 }
-
 
 //  Modelo para el registro de los gastos
 model Bill {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   amount      Float
-  createdDate DateTime  @default(now())
-  owner       String    @db.ObjectId @map("owner_id")
+  createdDate DateTime @default(now())
+  owner       String   @map("owner_id") @db.ObjectId
 
-  user        User      @relation(fields: [owner], references: [id])
+  user User @relation(fields: [owner], references: [id])
 
-  category    Category[]
+  category Category[]
+  goal     Goal[]
 }
 
 // Modelo para las categorías para los tipos de gastos e ingresos
 model Category {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  owner       String    @db.ObjectId @map("owner_id")
-  createdDate DateTime  @default(now())
-  billId      String    @db.ObjectId @map("bill_id")
-  revenueId   String    @db.ObjectId @map("revenue_id")
+  owner       String   @map("owner_id") @db.ObjectId
+  createdDate DateTime @default(now())
+  billId      String   @map("bill_id") @db.ObjectId
+  revenueId   String   @map("revenue_id") @db.ObjectId
 
-  bill        Bill      @relation(fields: [billId], references: [id])
-  revenue     Revenue   @relation(fields: [revenueId], references: [id])
+  bill    Bill    @relation(fields: [billId], references: [id])
+  revenue Revenue @relation(fields: [revenueId], references: [id])
 }
 
+model Goal {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  owner String @map("owner_id") @db.ObjectId
+
+  user      User   @relation(fields: [owner], references: [id])
+  billId    String @map("bill_id") @db.ObjectId
+  revenueId String @map("revenue_id") @db.ObjectId
+
+  bill    Bill    @relation(fields: [billId], references: [id])
+  revenue Revenue @relation(fields: [revenueId], references: [id])
+}

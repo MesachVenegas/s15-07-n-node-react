@@ -11,7 +11,7 @@ export const mappedPeriods: { [key in Periods]: string } = {
   semestral: "Semestral"
 }
 
-export const reportSchema = z.object({
+export const registerReportSchema = z.object({
   owner: z.string().min(6, {
     message: "Por favor ingrese propietario del reporte"
   }),
@@ -34,3 +34,6 @@ export const reportSchema = z.object({
   message: "El saldo debe ser igual a ingresos menos gastos",
   path: ["balance"]
 });
+
+export type RegisterReport = z.infer<typeof registerReportSchema>;
+

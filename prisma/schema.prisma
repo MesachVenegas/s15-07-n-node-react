@@ -18,7 +18,6 @@ model User {
   custom   Setting[] // Datos personalizados (por ejemplo, moneda y notificaciones)
   accounts Account[]
   sessions Session[]
-  revenues Revenue[]
   bills    Bill[]
   goal     Goal[]
 }
@@ -94,20 +93,6 @@ model Transaction {
   comment     String? // Comentario o nota adicional sobre la transacción (opcional)
 }
 
-// Modelo para el registro de ingresos
-model Revenue {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  amount      Float
-  createdDate DateTime @default(now())
-  owner       String   @map("owner_id") @db.ObjectId
-
-  user User @relation(fields: [owner], references: [id])
-
-  category Category[]
-  goal     Goal[]
-}
-
 //  Modelo para el registro de los gastos
 model Bill {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -115,11 +100,12 @@ model Bill {
   amount      Float
   createdDate DateTime @default(now())
   owner       String   @map("owner_id") @db.ObjectId
+  categoryId  String   @map("category_id") @db.ObjectId
+  goalId      String   @map("goal_id") @db.ObjectId
 
-  user User @relation(fields: [owner], references: [id])
-
-  category Category[]
-  goal     Goal[]
+  user     User     @relation(fields: [owner], references: [id])
+  goal     Goal     @relation(fields: [goalId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
 }
 
 // Modelo para las categorías para los tipos de gastos e ingresos
@@ -128,22 +114,26 @@ model Category {
   name        String
   owner       String   @map("owner_id") @db.ObjectId
   createdDate DateTime @default(now())
-  billId      String   @map("bill_id") @db.ObjectId
-  revenueId   String   @map("revenue_id") @db.ObjectId
 
-  bill    Bill    @relation(fields: [billId], references: [id])
-  revenue Revenue @relation(fields: [revenueId], references: [id])
+  bills Bill[]
 }
 
+// modelos para el registro de objetivos
 model Goal {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  owner String @map("owner_id") @db.ObjectId
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  target  Target
+  revenue Float
+  owner   String @map("owner_id") @db.ObjectId
 
-  user      User   @relation(fields: [owner], references: [id])
-  billId    String @map("bill_id") @db.ObjectId
-  revenueId String @map("revenue_id") @db.ObjectId
+  user  User   @relation(fields: [owner], references: [id])
+  bills Bill[]
+}
 
-  bill    Bill    @relation(fields: [billId], references: [id])
-  revenue Revenue @relation(fields: [revenueId], references: [id])
+// enumeración para los tipos de objetivos
+enum Target {
+  control
+  buy
+  investment
+  emergency
+  other
 }

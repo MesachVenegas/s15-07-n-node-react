@@ -1,28 +1,28 @@
+import { z } from "zod";
+
 import prisma from "@/lib/prisma";
-import { goalSchema, RegisterGoal } from "@/validations/goalSchema";
+import { crateGoalSchema } from '@/validations/goal';
+import { GoalsProps, PlanProps } from "@/types/goals";
 
-export async function registerGoal(
-  data: RegisterGoal
-): Promise<{ message: string; data: RegisterGoal }> {
+/**
+ * Creates a new goal in the database.
+ *
+ * @param {z.infer<typeof crateGoalSchema>} data - The data for creating the goal.
+ * @return {Promise<{ message: string; data: GoalsProps }>} - A promise that resolves to an object containing a success message and the created goal data.
+ * @throws {Error} - If there is an error creating the goal.
+ */
+export async function createGoal(data: z.infer<typeof crateGoalSchema>, ownerId: string, target: PlanProps): Promise<{ message: string; data: GoalsProps; }> {
   try {
-    // Validar los datos utilizando el esquema de Zod
-    const validatedData = goalSchema.parse(data);
-
-    // Crear el registro en la base de datos usando Prisma
-    const newGoal = await prisma.goal.create({
+    const goal = await prisma.goal.create({
       data: {
-        name: validatedData.name,
-        owner: validatedData.owner,
-        billId: validatedData.billId ?? "",  // Asegurarse de que no sea undefined
-        revenueId: validatedData.revenueId ?? "",  // Asegurarse de que no sea undefined
-      },
+        owner: ownerId,
+        target: target.plan,
+        revenue: data.revenue,
+      }
     });
 
-    return {
-      message: "Goal registered successfully",
-      data: newGoal,
-    };
+    return { message: "La meta se ha creado exitosamente", data: goal };
   } catch (error) {
-    throw new Error("Registration failed");
+    throw error;
   }
 }

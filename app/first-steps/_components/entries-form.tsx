@@ -1,18 +1,24 @@
 'use client'
 
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState, useTransition } from 'react';
 
-import { usePathname, useSearchParams } from 'next/navigation';
-
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
+import { PlanProps } from '@/types/goals';
 import Button from '@/components/ui/button';
+import { crateGoalSchema } from '@/validations/goal';
 
-export default function EntriesForm() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+export default function EntriesForm({ plan }: PlanProps ) {
+  const [isLoading, startTransition] = useTransition();
   const [value, setValue] = useState<number | string>(0);
+
+  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof crateGoalSchema>>({
+    resolver: zodResolver(crateGoalSchema),
+  });
 
   function handlePadClick(value: string) {
     setValue(prevEntry => {
@@ -34,8 +40,9 @@ export default function EntriesForm() {
   }
 
   function handleForm(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    console.log(value)
+    startTransition(() => {
+      console.log(value)
+    })
   }
 
   return (

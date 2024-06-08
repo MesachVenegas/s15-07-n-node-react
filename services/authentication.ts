@@ -1,14 +1,14 @@
 'use server'
 
-import bcrypt from 'bcryptjs';
 
 import { z } from 'zod';
+import bcrypt from 'bcryptjs';
 import { AuthError } from 'next-auth';
 
 import { signIn } from "@/auth";
-import prisma from "@/lib/prisma"
-import { LoginSchema, RegisterSchema } from '@/validations/auth';
+import prisma from "@/lib/prisma";
 import { UserProps } from "@/types/interface";
+import { LoginSchema, RegisterSchema } from '@/validations/auth';
 
 
 /**
@@ -18,7 +18,7 @@ import { UserProps } from "@/types/interface";
  * @returns {Promise<string | null>} Returns a message if authentication fails, or null if successful.
  * @throws {Error} If an error occurs during authentication.
  */
-export async function Authenticate(data: z.infer<typeof LoginSchema>) {
+export async function Authenticate(data: z.infer<typeof LoginSchema>): Promise<void> {
   try {
     await signIn("credentials", {
       ...data,
@@ -28,13 +28,32 @@ export async function Authenticate(data: z.infer<typeof LoginSchema>) {
     return;
   } catch (error) {
     if(error instanceof AuthError){
-      return error.cause?.err?.message;
+      throw error.cause?.err?.message;
     }
     throw error
   }
 }
 
 
+/**
+ * Authenticates a user using the specified provider.
+ *
+ * @param {string} provider - The provider to use for authentication. Must be one of 'google', 'github', or 'linkedin'.
+ * @return {Promise<void>} - A promise that resolves when the authentication is successful, or rejects with an error if authentication fails.
+ * @throws {Error} - If an error occurs during the authentication process.
+ */
+export async function ProviderAuth(provider: 'google' | 'github' | 'linkedin'): Promise<void> {
+  // TODO: Add verification if user has already goal configured to redirect to app or first steps.
+  try {
+    await signIn(provider, {
+      redirectTo: '/first-steps',
+    })
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+}
 
 
 /**

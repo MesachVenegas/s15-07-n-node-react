@@ -1,12 +1,12 @@
 import Image from "next/image";
 
-import { signIn } from '@/auth';
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Button from "@/components/ui/button";
 import CustomLink from "@/components/ui/link";
 import Badge from "@/components/ui/badge-icon";
+import { ProviderAuth } from "@/services/authentication";
 import LoginForm from "@/app/auth/_components/login-form";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
@@ -31,7 +31,7 @@ export default function LoginPage() {
 					{/* Autenticación de google */}
 					<form action={ async () => {
 						'use server';
-						await signIn('google');
+						await ProviderAuth('google');
 
 					}}>
 						<Button variant="outline" size="icon" className="rounded-md" type="submit">
@@ -46,7 +46,7 @@ export default function LoginPage() {
 					{/* Autenticación de Github */}
 					<form action={ async () => {
 						'use server';
-						await signIn('github');
+						await ProviderAuth('github');
 					}}>
 						<Button variant="black" size="icon" className="rounded-md" type="submit">
 							<FontAwesomeIcon icon={faGithub} className="w-full h-full" />
@@ -55,7 +55,7 @@ export default function LoginPage() {
 					{/* Autenticación de LinkedIn */}
 					<form action={ async () => {
 						'use server';
-						await signIn('linkedin');
+						await ProviderAuth('linkedin');
 					}}>
 						<Button variant="info" size="icon" className="rounded-md" type="submit">
 							<FontAwesomeIcon icon={faLinkedin} className="w-full h-full" />

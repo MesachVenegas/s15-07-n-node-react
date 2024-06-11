@@ -1,8 +1,10 @@
+'use server'
+
 import { z } from "zod";
 
 import prisma from "@/lib/prisma";
+import { GoalsProps } from "@/types/goals";
 import { crateGoalSchema } from '@/validations/goal';
-import { GoalsProps, PlanProps } from "@/types/goals";
 
 /**
  * Creates a new goal in the database.
@@ -11,13 +13,17 @@ import { GoalsProps, PlanProps } from "@/types/goals";
  * @return {Promise<{ message: string; data: GoalsProps }>} - A promise that resolves to an object containing a success message and the created goal data.
  * @throws {Error} - If there is an error creating the goal.
  */
-export async function createGoal(data: z.infer<typeof crateGoalSchema>, ownerId: string, target: PlanProps): Promise<{ message: string; data: GoalsProps; }> {
+export async function createGoal(
+  data: z.infer<typeof crateGoalSchema>,
+  ownerId: string,
+  target: 'control' | 'buy' | 'investment' | 'emergency' | 'other'
+): Promise<{ message: string; data: GoalsProps; }> {
   try {
     const goal = await prisma.goal.create({
       data: {
         owner: ownerId,
-        target: target.plan,
-        revenue: data.revenue,
+        target: target,
+        revenue: Number(data.revenue),
       }
     });
 

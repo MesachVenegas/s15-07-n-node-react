@@ -18,7 +18,7 @@ import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
 import Badge from "@/components/ui/badge-icon";
 import { RegisterSchema } from "@/validations/auth";
-import { registerNewuser } from "@/services/authentication";
+import { registerNewuser } from "@/routes/services/authentication";
 
 export default function RegisterForm() {
 	const [isLoading, startTransition] = useTransition();
@@ -33,11 +33,13 @@ export default function RegisterForm() {
 		resolver: zodResolver(RegisterSchema),
 	});
 
-	const registerAction: SubmitHandler<z.infer<typeof RegisterSchema>> = (data) => {
+	const registerAction: SubmitHandler<z.infer<typeof RegisterSchema>> = (
+		data
+	) => {
 		startTransition(() => {
 			registerNewuser(data)
-				.then(res => console.log(res))
-				.catch(err => console.error(err.message));
+				.then((res) => console.log(res))
+				.catch((err) => console.error(err.message));
 		});
 	};
 

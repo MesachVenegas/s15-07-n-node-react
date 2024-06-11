@@ -8,8 +8,8 @@ import { signOut } from "@/auth";
 import Button from "@/components/ui/button";
 import CustomLink from "@/components/ui/link";
 import Badge from "@/components/ui/badge-icon";
-import { ProviderAuth } from "@/services/authentication";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { ProviderAuth } from "@/services/authentication";
 
 export const metadata: Metadata = {
 	title: "Inicia tu cuenta",

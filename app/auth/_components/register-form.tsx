@@ -18,7 +18,7 @@ import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
 import Badge from "@/components/ui/badge-icon";
 import { RegisterSchema } from "@/validations/auth";
-import { registerNewuser } from "@/routes/services/authentication";
+import { registerNewuser } from "@/services/authentication";
 
 export default function RegisterForm() {
 	const [isLoading, startTransition] = useTransition();

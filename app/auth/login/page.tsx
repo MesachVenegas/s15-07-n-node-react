@@ -29,12 +29,16 @@ export default function LoginPage() {
 				{/* Proveedores de autentificación de terceros*/}
 				<div className="flex justify-center w-full gap-6">
 					{/* Autenticación de google */}
-					<form action={ async () => {
-						'use server';
-						await ProviderAuth('google');
-
-					}}>
-						<Button variant="outline" size="icon" className="rounded-md" type="submit">
+					<form
+						action={async () => {
+							"use server";
+							await ProviderAuth("google");
+						}}>
+						<Button
+							variant="outline"
+							size="icon"
+							className="rounded-md"
+							type="submit">
 							<Image
 								src="/assets/google.svg"
 								width={22}
@@ -44,20 +48,30 @@ export default function LoginPage() {
 						</Button>
 					</form>
 					{/* Autenticación de Github */}
-					<form action={ async () => {
-						'use server';
-						await ProviderAuth('github');
-					}}>
-						<Button variant="black" size="icon" className="rounded-md" type="submit">
+					<form
+						action={async () => {
+							"use server";
+							await ProviderAuth("github");
+						}}>
+						<Button
+							variant="black"
+							size="icon"
+							className="rounded-md"
+							type="submit">
 							<FontAwesomeIcon icon={faGithub} className="w-full h-full" />
 						</Button>
 					</form>
 					{/* Autenticación de LinkedIn */}
-					<form action={ async () => {
-						'use server';
-						await ProviderAuth('linkedin');
-					}}>
-						<Button variant="info" size="icon" className="rounded-md" type="submit">
+					<form
+						action={async () => {
+							"use server";
+							await ProviderAuth("linkedin");
+						}}>
+						<Button
+							variant="info"
+							size="icon"
+							className="rounded-md"
+							type="submit">
 							<FontAwesomeIcon icon={faLinkedin} className="w-full h-full" />
 						</Button>
 					</form>

@@ -20,22 +20,6 @@ export const registerCategorySchema = z.object({
     .regex(/^[a-fA-F0-9]{24}$/, {
       message: "El ID de propietario debe ser un ObjectId válido",
     }),
-  billId: z
-    .string()
-    .length(24, {
-      message: "El ID de factura debe tener exactamente 24 caracteres",
-    })
-    .regex(/^[a-fA-F0-9]{24}$/, {
-      message: "El ID de factura debe ser un ObjectId válido",
-    }),
-  revenueId: z
-    .string()
-    .length(24, {
-      message: "El ID de ingreso debe tener exactamente 24 caracteres",
-    })
-    .regex(/^[a-fA-F0-9]{24}$/, {
-      message: "El ID de ingreso debe ser un ObjectId válido",
-    }),
 });
 
 export type RegisterCategory = z.infer<typeof registerCategorySchema>;

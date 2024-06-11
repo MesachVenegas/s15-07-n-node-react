@@ -21,10 +21,9 @@ export const registerBillSchema = z.object({
     .max(1000000, {
       message: "La ganancia no puede exceder de 1,000,000",
     }),
-  owner: z.string().nonempty({
-    message: "El propietario es obligatorio",
-  }), // Add owner property validation
+  category: z
+    .string()
+    .min(1, { message: "La categoría de la cuenta es obligatoria" }),
 });
 
-export type RegisterBill = z.infer<typeof registerBillSchema>;
 

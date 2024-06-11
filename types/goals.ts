@@ -15,16 +15,6 @@ export interface CategoryProps{
   bills?: string[];
 }
 
-export interface BillProps {
-  id: string;
-  owner: string;
-  name: string;
-  amount: number;
-  createDate: Date;
-  categoryId?: string;
-  goalId?: string;
-}
-
 export interface PlanProps {
   plan: 'control' | 'buy' | 'investment' | 'emergency' | 'other';
 }

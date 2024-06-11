@@ -8,19 +8,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartSimple, faFile, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 import Badge from "@/components/ui/badge-icon";
-import useQueryParams from '@/hooks/useQueryParams';
 
 
 
 export default function Objectives() {
-  const createQueryStep = useQueryParams();
   const pathname = usePathname();
 
+  const createQueryParams = (query:string, value:string) => {
+		const params = new URLSearchParams();
+		params.append(query, value);
+
+    return params.toString();
+	};
 
   return (
     <div className="flex flex-col gap-6 justify-start font-semibold text-slate-500 items-center">
       <Link
-        href={pathname + '/entries' + '?' + createQueryStep('plan', 'control de mis gastos')}
+        href={pathname + '/entries' + '?' + createQueryParams('plan', 'control')}
         className="card bg-white">
         <Badge variant="foreground-error" size="md">
           <FontAwesomeIcon icon={faChartSimple} className="w-full h-full" />
@@ -28,7 +32,7 @@ export default function Objectives() {
         <p>Control de mis gastos</p>
       </Link>
       <Link
-        href={pathname + '/entries' + '?' + createQueryStep('plan', 'juntar para comprar')}
+        href={pathname + '/entries' + '?' + createQueryParams('plan', 'buy')}
         className="card bg-white">
         <Badge variant="foreground-success" size="md" className="relative">
           <Image
@@ -41,7 +45,7 @@ export default function Objectives() {
         <p>Juntar para comprar</p>
       </Link>
       <Link
-        href={pathname + '/entries' + '?' + createQueryStep('plan', 'ahorrar para invertir')}
+        href={pathname + '/entries' + '?' + createQueryParams('plan', 'investment')}
         className="card bg-white">
         <Badge variant="foreground-purple" size="md">
           <Image
@@ -54,7 +58,7 @@ export default function Objectives() {
         <p>Ahorrar para invertir</p>
       </Link>
       <Link
-        href={pathname + '/entries' + '?' + createQueryStep('plan', 'ahorrar para imprevistos')}
+        href={pathname + '/entries' + '?' + createQueryParams('plan', 'emergency')}
         className="card bg-white">
         <Badge variant="foreground-warning" size="md">
           <FontAwesomeIcon
@@ -64,7 +68,7 @@ export default function Objectives() {
         </Badge>
         <p>Ahorrar para imprevistos</p>
       </Link>
-      <Link href={pathname + '/entries' + '?' + createQueryStep('plan', 'otro')} className="card bg-white">
+      <Link href={pathname + '/entries' + '?' + createQueryParams('plan', 'other')} className="card bg-white">
         <Badge variant="foreground-neutral" size="md">
           <FontAwesomeIcon icon={faFile} className="w-full h-full" />
         </Badge>

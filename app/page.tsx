@@ -23,7 +23,7 @@ export default function Home() {
           />
         </Badge>
         <div className="w-full flex justify-center">
-          <CustomLink href="/auth/login" variant="button" className='text-primary' size="btnWide">
+          <CustomLink href="/auth" variant="button" className='text-primary' size="btnWide">
             Comenzar
             <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5" />
           </CustomLink>

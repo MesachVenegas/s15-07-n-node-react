@@ -43,7 +43,11 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       boxShadow: {
-        badge: "0 5px 10px rgba(0, 0, 0, 0.4)"
+        badge: "0 5px 10px rgba(0, 0, 0, 0.4)",
+        card: "0 8px 5px rgba(0, 0, 0, 0.2)"
+      },
+      backgroundImage: {
+        'logo': 'url("/assets/transparent-logo.svg"), linear-gradient(360deg, #f6f7fb 70%, #56da8a 100%)'
       }
     },
   },

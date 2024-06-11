@@ -9,7 +9,7 @@ export const mappedPeriods: { [key in Transactions]: string } = {
   gasto: "Gasto",
 }
 
-export const transactionSchema = z.object({
+export const registerTransactionSchema = z.object({
   owner: z.string().min(6, {
     message: "Por favor ingrese propietario del reporte"
   }),
@@ -21,3 +21,5 @@ export const transactionSchema = z.object({
   amount: z.number().min(0, { message: "El monto de la transacción debe ser mayor o igual a cero." }),
   comment: z.string().min(3, { message: "Debes agregar un comentario o nota sobre la transacción" }),
 })
+
+export type RegisterTransaction = z.infer<typeof registerTransactionSchema>;

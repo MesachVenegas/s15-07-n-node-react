@@ -35,7 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <label
         className={cn(
-          `label border-2 border-gray-400 transition-colors duration-200 ease-in-out focus-within:ring-1
+          `label border-2 border-gray-400 bg-white/90 transition-colors duration-200 ease-in-out focus-within:ring-1
            ${error
             ? " border-red focus-within:border-red focus-within:ring-red"
             : "border-gray-400 focus-within:border-blue-800 focus-within:ring-blue-800"

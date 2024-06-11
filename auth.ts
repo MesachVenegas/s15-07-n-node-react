@@ -11,7 +11,10 @@ export const { handlers: { GET, POST }, signIn, signOut, auth } = NextAuth({
     signOut: "/",
   },
   callbacks: {
-    async session({ session}){
+    async session({ session, token }){
+      if(session.user && token.sub){
+        session.user.id = token.sub;
+      }
       return session;
     },
     async jwt({ token }){

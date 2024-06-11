@@ -3,6 +3,7 @@
 # Workspace files
 /.idx
 /.vscode
+/.vercel
 bun.lockb
 
 # dependencies

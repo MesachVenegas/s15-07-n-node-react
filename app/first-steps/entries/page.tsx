@@ -1,14 +1,11 @@
-"use client"
-
 import Image from 'next/image';
-
 
 import { goal } from '@/lib/constants';
 import { PlanProps } from '@/types/goals';
 import Badge from "@/components/ui/badge-icon";
 import EntriesForm from '@/app/first-steps/_components/entries-form';
 
-export default function Entries({ searchParams }: { searchParams: PlanProps }) {
+export default async function Entries({ searchParams }: { searchParams: PlanProps }) {
   const plan = searchParams?.plan;
 
   return (

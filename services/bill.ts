@@ -1,9 +1,13 @@
+
+import { z } from "zod";
+ 
 import prisma from "@/lib/prisma";
-import { registerBillSchema, RegisterBill } from "@/validations/billSchema";
+import { BillProps } from "@/types/bills";
+import { registerBillSchema } from "@/validations/billSchema";
 
 export async function registerBill(
-  data: RegisterBill
-): Promise<{ message: string; data: RegisterBill }> {
+  data: z.infer<typeof registerBillSchema>, goalId: string, userId: string
+) : Promise<{ message: string; data: BillProps }> {
   try {
     // Validar los datos utilizando el esquema de Zod
     const validatedData = registerBillSchema.parse(data);
@@ -13,7 +17,9 @@ export async function registerBill(
       data: {
         name: validatedData.name,
         amount: validatedData.amount,
-        owner: validatedData.owner, // Asegúrate de que 'owner' esté presente en 'validatedData'
+        owner: userId,
+        categoryId: validatedData.category,
+        goalId: goalId,
       },
     });
 

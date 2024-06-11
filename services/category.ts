@@ -14,8 +14,6 @@ export async function registerCategory(
       data: {
         name: validatedData.name,
         owner: validatedData.owner,
-        billId: validatedData.billId,
-        revenueId: validatedData.revenueId,
       },
     });
 

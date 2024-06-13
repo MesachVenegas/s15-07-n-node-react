@@ -13,15 +13,16 @@ export default function Home() {
         <h1 className="title-1 text-primary">Controla tus finanzas y cumple tus metas</h1>
       </header>
       <div className="welcome-gradient h-1/2 relative">
-        <Badge className='absolute -top-16' >
+        <Badge className='absolute -top-16 bg-transparent shadow-none' >
           <Image
-            src="nodejs.svg"
+            src="/assets/bg-logo.svg"
             fill
             sizes="(max-width: 100%)"
             alt="ET: Tu asistente de otro mundo"
-            className='object-contain p-4'
+            className='object-contain drop-shadow-2xl'
           />
         </Badge>
+        <Image src='/assets/bg-home.svg' width={500} height={400} alt='bg layer' className='absolute -top-[45%] left-0 -z-10' />
         <div className="w-full flex justify-center">
           <CustomLink href="/auth" variant="button" className='text-primary' size="btnWide">
             Comenzar

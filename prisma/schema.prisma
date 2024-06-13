@@ -98,6 +98,7 @@ model Bill {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   amount      Float
+  icon        String
   createdDate DateTime @default(now())
   owner       String   @map("owner_id") @db.ObjectId
   categoryId  String   @map("category_id") @db.ObjectId
@@ -112,10 +113,14 @@ model Bill {
 model Category {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  owner       String   @map("owner_id") @db.ObjectId
+  icon        String
+  color       String   @default("neutral")
+  owner       String?  @map("owner_id") @db.ObjectId
+  default     Boolean  @default(false)
   createdDate DateTime @default(now())
 
-  bills Bill[]
+  bills         Bill[]
+  billsDefault  BillDefault[]
 }
 
 // modelos para el registro de objetivos
@@ -127,6 +132,17 @@ model Goal {
 
   user  User   @relation(fields: [owner], references: [id])
   bills Bill[]
+}
+
+model BillDefault {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  amount      Float
+  icon        String
+  color      String
+  categoryId  String   @map("category_id") @db.ObjectId
+
+  category Category @relation(fields: [categoryId], references: [id])
 }
 
 // enumeración para los tipos de objetivos

@@ -3,13 +3,14 @@
 import { useTransition, useState } from "react";
 
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
 import {
 	faArrowRight,
 	faEye,
 	faEyeSlash,
-} from "@fortawesome/free-solid-svg-icons";
+	} from "@fortawesome/free-solid-svg-icons";
+import { ClipLoader } from "react-spinners";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Input from "@/components/ui/input";
@@ -81,9 +82,13 @@ export default function LoginForm() {
 
 			<Button
 				size="wide"
+				disabled={isLoading}
 				className="gradient-right-primary justify-between font-semibold text-white max-w-xs">
 				Continuar
-				<FontAwesomeIcon icon={faArrowRight} className="w-5 h-5" />
+				{!isLoading && (
+					<FontAwesomeIcon icon={faArrowRight} className="w-5 h-5" />
+				)}
+				<ClipLoader color="white" loading={isLoading} size={16} />
 			</Button>
 		</form>
 	);

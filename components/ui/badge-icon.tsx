@@ -54,6 +54,8 @@ const Badge = forwardRef<HTMLDivElement, FigureProps>(
   }
 );
 
+export type BadgeTypes = VariantProps<typeof variantsBadge>;
+
 Badge.displayName = 'Badge'
 
 export default Badge;

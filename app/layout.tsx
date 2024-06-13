@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { poppins } from "@/styles/fonts";
 import AuthProvider from "@/components/auth-provider";
+import ReduxProvider from "@/components/redux-provider";
 
 export const metadata: Metadata = {
 	title: {
@@ -19,17 +20,18 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="es">
-      <body className={`${poppins.className} antialiased text-slate-700 dark:text-layout`}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="es">
+			<body
+				className={`${poppins.className} antialiased text-slate-700 dark:text-layout`}>
+				<ReduxProvider>
+					<AuthProvider>{children}</AuthProvider>
+				</ReduxProvider>
+			</body>
+		</html>
+	);
 }

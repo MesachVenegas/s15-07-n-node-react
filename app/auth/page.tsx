@@ -62,15 +62,6 @@ export default function LoginPage() {
 							Login with LinkedIn
 						</Button>
 					</form>
-					<form
-						action={async () => {
-							"use server";
-							await signOut();
-						}}>
-						<Button className="shadow-none" variant="info" size="lg">
-							LOGOUT
-						</Button>
-					</form>
 				</div>
 				{/* Separador */}
 				<div className="flex w-full max-w-sm items-center justify-center gap-6">

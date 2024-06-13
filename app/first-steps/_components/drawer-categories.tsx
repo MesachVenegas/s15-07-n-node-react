@@ -18,7 +18,7 @@ import { Iconkeys, VariantKeys } from "@/types";
 import { colors, icons } from "@/lib/constants";
 import { CategoryProps } from "@/types/category";
 import { BillCategoryStateProps } from "@/types/bills";
-import { addBillToCategory } from "@/context/store/steps/addBillToCategory";
+import { addCategory } from "@/context/store/steps/addBillToCategory";
 
 export default function DrawerCategories({
 	categories,
@@ -40,7 +40,7 @@ export default function DrawerCategories({
 			variant: category.color,
 			bills: [],
 		};
-		dispatch(addBillToCategory(data));
+		dispatch(addCategory(data));
 	};
 
 	return (

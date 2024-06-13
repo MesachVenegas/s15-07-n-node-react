@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+
 export const registerBillSchema = z.object({
   name: z
     .string()
@@ -9,21 +10,23 @@ export const registerBillSchema = z.object({
     .max(100, {
       message: "El nombre debe tener menos de 100 caracteres",
     })
-    .regex(/^[a-zA-Z]+$/, {
+    .regex(/^[a-zA-Z\s]+$/, {
       message:
-        "El nombre solo puede contener letras sin espacios ni caracteres especiales",
+        "El nombre solo puede contener letras sin números ni caracteres especiales",
     }),
   amount: z
-    .number()
-    .positive({
-      message: "La ganancia debe ser un número positivo",
-    })
-    .max(1000000, {
-      message: "La ganancia no puede exceder de 1,000,000",
-    }),
-  category: z
+    .string()
+    .regex(/^\d*\.?\d*$/, { message: "El monto del ingreso debe ser un un valor numérico" }),
+  icon: z
+    .string()
+    .optional(),
+  categoryId: z
     .string()
     .min(1, { message: "La categoría de la cuenta es obligatoria" }),
-});
+}).refine( data => {
+  const { amount } = data;
+
+  return parseFloat(amount);
+})
 
 

@@ -4,15 +4,15 @@ import Image from "next/image";
 
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
+import CustomLink from "@/components/ui/link";
 import Badge from "@/components/ui/badge-icon";
 import { Iconkeys, VariantKeys } from "@/types";
 import { colors, icons } from "@/lib/constants";
 import { BillCategoryStateProps } from "@/types/bills";
 import DrawerBills from "../../_components/drawer-bills";
 import DrawerCategories from "../../_components/drawer-categories";
-import CustomLink from "@/components/ui/link";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function AddBill({ searchParams }: { searchParams: { t?: string, c?: string } }) {
   const userTarget = searchParams?.t;
@@ -50,7 +50,7 @@ export default function AddBill({ searchParams }: { searchParams: { t?: string, 
 								{/* Add new  bill to category */}
 								<DrawerBills
 									btnClass="bg-primary/20 text-primary"
-									target={userTarget}
+									target={userTarget as string}
 									categoryId={item.id}
 								/>
 							</div>

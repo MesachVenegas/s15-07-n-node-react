@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 
-import { useDispatch } from "react-redux";
-import { faFile, faPen, faPlus } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFile, faPen, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import {
 	Drawer,
@@ -18,35 +19,39 @@ import { cn } from "@/lib/utils";
 import Badge from "@/components/ui/badge-icon";
 import { Iconkeys, VariantKeys } from "@/types";
 import { colors, icons } from "@/lib/constants";
-import { CategoryProps } from "@/types/category";
-import { BillCategoryStateProps, DefaultBillProps } from "@/types/bills";
-import { addBillToCategory } from "@/context/store/steps/addBillToCategory";
+import { DefaultBillProps } from "@/types/bills";
 import { FetchDefaultBills } from "@/services/bill";
-import Link from "next/link";
 
 export default function DrawerBills({
-  categoryId,
+	categoryId,
 	target,
 	btnClass,
 }: {
-  categoryId: string,
-	target?: string;
+	categoryId: string;
+	target: string;
 	btnClass?: string;
 }) {
-  const [categories, setCategories] = useState<DefaultBillProps[] | null>(null);
-	const dispatch = useDispatch();
+	const [categories, setCategories] = useState<DefaultBillProps[] | null>(null);
 
-	const handleAddBill = (newBill: any) => {
-    console.log(newBill)
+	const createdUrl = (id: string, name: string) => {
+		const params = new URLSearchParams({
+			cat: categoryId,
+			tgt: target,
+			bId: id,
+			bName: name,
+		});
+
+		return params.toString();
 	};
 
-  useEffect(() => {
-    FetchDefaultBills(categoryId)
-			.then((res) =>{
-          setCategories(res.data)
-        })
+
+	useEffect(() => {
+		FetchDefaultBills(categoryId)
+			.then((res) => {
+				setCategories(res.data);
+			})
 			.catch((err) => console.error(err.message));
-  },[categoryId])
+	}, [categoryId]);
 
 	return (
 		<Drawer>
@@ -65,7 +70,8 @@ export default function DrawerBills({
 				<div className="flex flex-col justify-center items-center overflow-y-auto overflow-hidden gap-4 w-full h-full max-h-[80vh]">
 					<DrawerClose key="custom" asChild>
 						<Link
-							href={`/first-steps/bills/create?c=${categoryId}&t=${target}`} className="card">
+							href={`/first-steps/bills/create?${createdUrl("", "custom")}`}
+							className="card">
 							<Badge variant="foreground-neutral" size="md">
 								<FontAwesomeIcon icon={faFile} className="w-full h-full" />
 							</Badge>
@@ -83,12 +89,14 @@ export default function DrawerBills({
 
 						return (
 							<DrawerClose key={category.id} asChild>
-								<div className="card">
+								<Link
+									className="card"
+									href={`/first-steps/bills/create?${createdUrl(category.id, category.name)}`}>
 									<Badge variant={Variant} size="md">
 										<FontAwesomeIcon icon={Icon} className="w-full h-full" />
 									</Badge>
 									<p className="capitalize">{category.name}</p>
-								</div>
+								</Link>
 							</DrawerClose>
 						);
 					})}

@@ -49,9 +49,11 @@ const DrawerContent = React.forwardRef<
       )}
       {...props}
     >
-      <div className="mx-auto mt-4 h-4 w-80 relative">
-        <Image src='/assets/drawer.svg' alt='drawer icon' fill className="object-contain" />
-      </div>
+      <DrawerClose asChild>
+        <div className="mx-auto mt-4 h-4 w-96 relative cursor-pointer mb-4">
+          <Image src='/assets/drawer.svg' alt='drawer icon' fill className="object-contain" />
+        </div>
+      </DrawerClose>
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>

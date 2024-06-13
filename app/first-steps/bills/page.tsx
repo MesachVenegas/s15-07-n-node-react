@@ -1,14 +1,13 @@
-
 import Image from 'next/image';
 
-
-
 import Badge from "@/components/ui/badge-icon";
-import CustomLink from '@/components/ui/link';
-import DrawerCategories from '@/app/first-steps/_components/drawer-categories';
+import { FetchDefaultCategories } from '@/services/category';
+import BillSettingsWrapper from '../_components/bill-settings-wrapper';
 
-export default function BillsPage({ searchParams }: { searchParams: { g?: string } }) {
+export default async function BillsPage({ searchParams }: { searchParams: { g?: string, step?: string } }) {
 	const goalId = searchParams?.g;
+	const step = searchParams?.step;
+	const categories = (await FetchDefaultCategories()).data;
 
   return (
 		<main className="flex flex-col justify-center items-center w-full min-h-screen bg-gradient gap-10 p-10">
@@ -21,16 +20,9 @@ export default function BillsPage({ searchParams }: { searchParams: { g?: string
 					alt="bill icon"
 				/>
 			</Badge>
-			<div className="flex flex-grow items-start justify-center w-full">
-				<DrawerCategories />
-			</div>
-			<div>
-				<CustomLink
-					href={`/first-steps/bills/add?p=${goalId}`}
-					className="text-gray-600 text-sm hover:no-underline">
-					Saltar este paso
-				</CustomLink>
-			</div>
+			<p className='capitalize font-semibold text-lg'>Elige las Categorías</p>
+			{/* Drawer categories */}
+			<BillSettingsWrapper categories={categories} goalId={goalId} />
 		</main>
 	);
 }
